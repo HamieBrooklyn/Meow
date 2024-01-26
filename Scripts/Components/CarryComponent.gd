@@ -27,6 +27,8 @@ func _process(delta):
 			if reset_rotation:
 				body.global_rotation = lerp(body.global_rotation, 0.0, 1)
 
+func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+	if event.is_action_pressed("interact") and InputManager.holding == null:
 		InputManager.holding = body
 		change_state("carrying")
 		is_carrying = true

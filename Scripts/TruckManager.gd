@@ -1,6 +1,6 @@
 extends Node2D
 
-const FOOD_TRUCK = preload("res://Nodes/FoodTruck.tscn")
+const FOOD_TRUCK = preload("res://Nodes/Objects/FoodTruck.tscn")
 
 var current_truck
 
