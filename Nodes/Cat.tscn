@@ -1,0 +1,196 @@
+[gd_scene load_steps=16 format=3 uid="uid://dr2sq0325qauq"]
+
+[ext_resource type="Script" path="res://Scripts/Classes/cat.gd" id="1_pk8fx"]
+[ext_resource type="Texture2D" uid="uid://2lhkjoie7tns" path="res://Art/Cats/WhiteCat.png" id="2_00d51"]
+[ext_resource type="PackedScene" uid="uid://b3clo52d6fsy0" path="res://Nodes/Components/CarryComponent.tscn" id="3_78ycr"]
+[ext_resource type="PackedScene" uid="uid://vqdlo2dn08xw" path="res://Nodes/Components/SelectionComponent.tscn" id="4_501mm"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jet7t"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v4432"]
+size = Vector2(52, 76)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_plqo8"]
+radius = 43.1856
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_poqyl"]
+bg_color = Color(0.572549, 0.403922, 0.929412, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n8yae"]
+bg_color = Color(0.843137, 0.345098, 0.305882, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_teaep"]
+size = Vector2(52, 76)
+
+[sub_resource type="Animation" id="Animation_e5dmp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Kitty:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_66kfh"]
+resource_name = "cat_carry"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Kitty:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [21]
+}
+
+[sub_resource type="Animation" id="Animation_nslrs"]
+resource_name = "cat_idle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Kitty:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_0f1pg"]
+resource_name = "cat_sleep"
+length = 50.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Kitty:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 16, 17.1, 18.1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [36, 37, 39, 37]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1pinx"]
+_data = {
+"RESET": SubResource("Animation_e5dmp"),
+"cat_carry": SubResource("Animation_66kfh"),
+"cat_idle": SubResource("Animation_nslrs"),
+"cat_sleep": SubResource("Animation_0f1pg")
+}
+
+[node name="Cat" type="RigidBody2D" groups=["Cat", "Selectable"]]
+position = Vector2(0, -1)
+collision_layer = 2
+lock_rotation = true
+script = ExtResource("1_pk8fx")
+
+[node name="Kitty" type="Sprite2D" parent="."]
+texture_filter = 1
+material = SubResource("ShaderMaterial_jet7t")
+scale = Vector2(4, 4)
+texture = ExtResource("2_00d51")
+hframes = 9
+vframes = 6
+
+[node name="Hitbox" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(2, 0)
+shape = SubResource("RectangleShape2D_v4432")
+
+[node name="CarryComponent" parent="." node_paths=PackedStringArray("body", "offset_point") instance=ExtResource("3_78ycr")]
+body = NodePath("..")
+keep_momentum = true
+max_force = 1000.0
+offset_point = NodePath("../CarryOffset")
+
+[node name="Carry" type="CollisionShape2D" parent="CarryComponent"]
+visible = false
+shape = SubResource("CircleShape2D_plqo8")
+debug_color = Color(0.501961, 0.427451, 1, 0.419608)
+
+[node name="CarryOffset" type="Marker2D" parent="."]
+position = Vector2(0, -26)
+
+[node name="Item" type="Marker2D" parent="."]
+position = Vector2(47, 0)
+
+[node name="StatsTimers" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="Origin" type="Marker2D" parent="."]
+
+[node name="StatsContainer" type="Control" parent="Origin"]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 0
+offset_left = -18.0
+offset_top = -95.0
+offset_right = 22.0
+offset_bottom = -55.0
+
+[node name="Tiredness" type="ProgressBar" parent="Origin/StatsContainer"]
+layout_mode = 0
+offset_left = -38.0
+offset_top = -8.0
+offset_right = 76.0
+offset_bottom = 19.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_poqyl")
+
+[node name="Hunger" type="ProgressBar" parent="Origin/StatsContainer"]
+layout_mode = 0
+offset_left = -38.0
+offset_top = 28.0
+offset_right = 76.0
+offset_bottom = 55.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_n8yae")
+
+[node name="Name" type="Label" parent="Origin/StatsContainer"]
+layout_mode = 0
+offset_left = -5.0
+offset_top = -40.0
+offset_right = 42.0
+offset_bottom = -17.0
+text = "Name
+"
+horizontal_alignment = 1
+
+[node name="SelectionComponent" parent="." node_paths=PackedStringArray("target", "sprite") instance=ExtResource("4_501mm")]
+target = NodePath("..")
+sprite = NodePath("../Kitty")
+show_outline = true
+hide_outline_on_click = true
+
+[node name="Select" type="CollisionShape2D" parent="SelectionComponent"]
+visible = false
+position = Vector2(2, 0)
+shape = SubResource("RectangleShape2D_teaep")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_1pinx")
+}
+autoplay = "cat_idle"
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]

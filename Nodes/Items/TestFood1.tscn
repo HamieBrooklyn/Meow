@@ -1,0 +1,62 @@
+[gd_scene load_steps=11 format=3 uid="uid://b7w1ef3cod8qf"]
+
+[ext_resource type="Texture2D" uid="uid://bieb6357gjwkv" path="res://icon.svg" id="1_2820c"]
+[ext_resource type="Script" path="res://Scripts/Classes/food_prototype.gd" id="1_ds5nq"]
+[ext_resource type="PackedScene" uid="uid://c4lag0jmhq4om" path="res://Nodes/Components/ItemComponent.tscn" id="2_1cs2c"]
+[ext_resource type="PackedScene" uid="uid://b3clo52d6fsy0" path="res://Nodes/Components/CarryComponent.tscn" id="3_7p4f1"]
+[ext_resource type="PackedScene" uid="uid://vqdlo2dn08xw" path="res://Nodes/Components/SelectionComponent.tscn" id="5_tu5tl"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7q1qw"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_naov2"]
+radius = 39.5424
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_sexs7"]
+radius = 40.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_khr8e"]
+size = Vector2(52, 52)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rt87l"]
+size = Vector2(52, 52)
+
+[node name="Food" type="RigidBody2D"]
+position = Vector2(2, -1)
+collision_layer = 4
+lock_rotation = true
+script = ExtResource("1_ds5nq")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 0, 1, 1)
+material = SubResource("ShaderMaterial_7q1qw")
+scale = Vector2(0.400001, 0.400001)
+texture = ExtResource("1_2820c")
+
+[node name="ItemComponent" parent="." node_paths=PackedStringArray("item", "item_handler") instance=ExtResource("2_1cs2c")]
+collision_mask = 3
+item = NodePath("..")
+taker_group = "Cat"
+item_handler = NodePath("..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ItemComponent"]
+scale = Vector2(1.0185, 1)
+shape = SubResource("CircleShape2D_naov2")
+
+[node name="CarryComponent" parent="." node_paths=PackedStringArray("body") instance=ExtResource("3_7p4f1")]
+body = NodePath("..")
+keep_momentum = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CarryComponent"]
+shape = SubResource("CircleShape2D_sexs7")
+
+[node name="SelectComponent" parent="." node_paths=PackedStringArray("target", "sprite") instance=ExtResource("5_tu5tl")]
+target = NodePath("..")
+sprite = NodePath("../Sprite2D")
+show_outline = true
+hide_outline_on_click = true
+
+[node name="Select" type="CollisionShape2D" parent="SelectComponent"]
+shape = SubResource("RectangleShape2D_khr8e")
+
+[node name="Collider" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_rt87l")

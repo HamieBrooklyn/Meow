@@ -1,0 +1,67 @@
+[gd_scene load_steps=8 format=3 uid="uid://b0shgnec6e7l4"]
+
+[ext_resource type="Script" path="res://Scripts/FoodTruck.gd" id="1_fiddh"]
+[ext_resource type="Texture2D" uid="uid://ce3xbvp5m8aci" path="res://Art/Truck/truck_hatch.png" id="1_hwxm2"]
+[ext_resource type="Texture2D" uid="uid://b5msdetr3kfhf" path="res://Art/Truck/truck_body.png" id="2_ietep"]
+[ext_resource type="Texture2D" uid="uid://c3u47e661gp87" path="res://Art/Truck/wheel.png" id="3_uxmko"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_825v6"]
+size = Vector2(4.0625, 50.3125)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5lxi8"]
+size = Vector2(191.25, 95.625)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_eemjg"]
+radius = 29.7286
+
+[node name="FoodTruck" type="StaticBody2D"]
+position = Vector2(0, -1.52588e-05)
+scale = Vector2(3.2, 3.2)
+script = ExtResource("1_fiddh")
+
+[node name="Hatch" type="StaticBody2D" parent="."]
+position = Vector2(93.75, -16.25)
+collision_mask = 6
+
+[node name="Sprite" type="Sprite2D" parent="Hatch"]
+texture_filter = 1
+texture = ExtResource("1_hwxm2")
+offset = Vector2(0, -22.795)
+
+[node name="Collider" type="CollisionShape2D" parent="Hatch"]
+position = Vector2(0.156258, -22.9688)
+shape = SubResource("RectangleShape2D_825v6")
+
+[node name="Body" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, -58.75)
+texture = ExtResource("2_ietep")
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+position = Vector2(0.312489, -62.1874)
+scale = Vector2(0.999999, 0.999999)
+shape = SubResource("RectangleShape2D_5lxi8")
+
+[node name="FoodSpawn" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(108.125, -58.75)
+
+[node name="Wheels" type="Node2D" parent="."]
+position = Vector2(0, -58.75)
+
+[node name="FrontWheel" type="Sprite2D" parent="Wheels"]
+texture_filter = 1
+position = Vector2(-64, 43)
+texture = ExtResource("3_uxmko")
+
+[node name="BackWheel" type="Sprite2D" parent="Wheels"]
+texture_filter = 1
+position = Vector2(65, 43)
+texture = ExtResource("3_uxmko")
+
+[node name="ItemChecker" type="Area2D" parent="."]
+position = Vector2(113.75, -13.75)
+collision_mask = 4
+
+[node name="Check" type="CollisionShape2D" parent="ItemChecker"]
+shape = SubResource("CircleShape2D_eemjg")

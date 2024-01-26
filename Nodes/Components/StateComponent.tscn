@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://b1hwbguu3kf4j"]
+
+[sub_resource type="GDScript" id="GDScript_vt3ex"]
+script/source = "extends Node
+class_name StateComponent
+
+@export var current_state = \"idle\""
+
+[node name="StateComponent" type="Node"]
+script = SubResource("GDScript_vt3ex")

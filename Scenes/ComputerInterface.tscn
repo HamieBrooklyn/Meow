@@ -1,0 +1,104 @@
+[gd_scene load_steps=7 format=3 uid="uid://c07c5fqs10uop"]
+
+[ext_resource type="Shader" path="res://Shaders/Blur.gdshader" id="1_m1wrb"]
+[ext_resource type="Texture2D" uid="uid://8f0i07lejmot" path="res://Art/Computer/background.png" id="1_t5yh8"]
+[ext_resource type="PackedScene" uid="uid://bi45d8lk753ee" path="res://Nodes/UI/ComputerButton.tscn" id="3_7y45d"]
+[ext_resource type="Texture2D" uid="uid://5fudxq7i0y2b" path="res://Art/Computer/Icons/truck_icon.png" id="4_c7pa5"]
+[ext_resource type="Script" path="res://Scripts/Exit.gd" id="5_uxc8n"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fqni5"]
+shader = ExtResource("1_m1wrb")
+shader_parameter/lod = 2.472
+
+[node name="Computer" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Backdrop" type="Control" parent="."]
+anchors_preset = 0
+
+[node name="Background" type="Sprite2D" parent="Backdrop"]
+position = Vector2(579, 335)
+texture = ExtResource("1_t5yh8")
+
+[node name="Blur" type="Sprite2D" parent="Backdrop"]
+material = SubResource("ShaderMaterial_fqni5")
+position = Vector2(579, 335)
+texture = ExtResource("1_t5yh8")
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 25.0
+offset_top = 27.0
+offset_right = -25.0
+offset_bottom = -27.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/v_separation = 24
+
+[node name="Ordering" parent="GridContainer" node_paths=PackedStringArray("panel") instance=ExtResource("3_7y45d")]
+layout_mode = 2
+texture = ExtResource("4_c7pa5")
+panel = NodePath("../../Panels/OrderingPanel")
+label_text = "Order"
+
+[node name="Panels" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="OrderingPanel" type="Control" parent="Panels"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Backdrop" type="Panel" parent="Panels/OrderingPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 145.0
+offset_top = 79.0
+offset_right = -145.0
+offset_bottom = -79.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Defaults" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Exit" type="Button" parent="Defaults"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -38.0
+offset_top = 7.0
+offset_right = -8.0
+offset_bottom = 37.0
+grow_horizontal = 0
+text = "X
+"
+script = ExtResource("5_uxc8n")
+
+[connection signal="button_down" from="Defaults/Exit" to="GridContainer/Ordering" method="_on_exit_button_down"]
+[connection signal="button_down" from="Defaults/Exit" to="Defaults/Exit" method="_on_button_down"]

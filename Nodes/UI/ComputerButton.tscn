@@ -1,0 +1,35 @@
+[gd_scene load_steps=3 format=3 uid="uid://bi45d8lk753ee"]
+
+[ext_resource type="Script" path="res://Scripts/ComputerButton.gd" id="1_55gfy"]
+[ext_resource type="FontFile" uid="uid://b5k7ijmdqiqfv" path="res://Art/Fonts/Teko-VariableFont_wght.ttf" id="2_27lbq"]
+
+[node name="ComputerButton" type="TextureButton"]
+process_priority = 1
+texture_filter = 1
+clip_contents = true
+custom_minimum_size = Vector2(80, 80)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1072.0
+offset_bottom = -568.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch_mode = 0
+script = ExtResource("1_55gfy")
+
+[node name="Label" type="Label" parent="."]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = -5.0
+offset_bottom = 28.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_27lbq")
+theme_override_font_sizes/font_size = 22
+text = "Hola
+"
+horizontal_alignment = 1
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://4wn0uhpo15oy"]
+
+[ext_resource type="Script" path="res://Scripts/Classes/bed.gd" id="1_tqjn4"]
+[ext_resource type="PackedScene" uid="uid://dk3fk4nhh4nwu" path="res://Nodes/Components/RestPointComponent.tscn" id="2_h1imn"]
+[ext_resource type="Texture2D" uid="uid://bieb6357gjwkv" path="res://icon.svg" id="2_yjihm"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vuqvb"]
+radius = 16.5325
+
+[node name="Bed" type="Node2D"]
+scale = Vector2(2.48, 2.48)
+script = ExtResource("1_tqjn4")
+
+[node name="RestPointComponent" parent="." node_paths=PackedStringArray("rest_point_manager") instance=ExtResource("2_h1imn")]
+collision_layer = 8
+collision_mask = 7
+rest_point_manager = NodePath("..")
+rest_group = "Cat"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RestPointComponent"]
+position = Vector2(0, -3.22581)
+shape = SubResource("CircleShape2D_vuqvb")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.667843, 0.226815)
+texture = ExtResource("2_yjihm")
+
+[node name="SleepTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+
+[connection signal="timeout" from="SleepTimer" to="." method="_on_sleep_timer_timeout"]

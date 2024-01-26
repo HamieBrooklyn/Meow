@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://vqdlo2dn08xw"]
+
+[ext_resource type="Script" path="res://Scripts/Components/SelectionComponent.gd" id="1_8uejm"]
+
+[node name="SelectionComponent" type="Area2D"]
+script = ExtResource("1_8uejm")
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

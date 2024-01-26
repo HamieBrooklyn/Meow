@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://r3sk7dywmb6r"]
+
+[ext_resource type="Script" path="res://Scripts/Computer.gd" id="1_losnf"]
+[ext_resource type="Texture2D" uid="uid://bieb6357gjwkv" path="res://icon.svg" id="2_lf134"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s6pwc"]
+size = Vector2(122, 92)
+
+[node name="Computer" type="Area2D"]
+script = ExtResource("1_losnf")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0.27451, 0.27451, 0.27451, 1)
+scale = Vector2(0.953125, 0.703125)
+texture = ExtResource("2_lf134")
+
+[node name="Click" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_s6pwc")
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]
